@@ -50,7 +50,7 @@ jobs:
       - name: Build
         run: |
           builddir=$(pwd)
-          wget https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.11/SRB2-v2213-Full.zip
+          wget https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.13/SRB2-v2213-Full.zip
 
           mkdir assets/out
           pushd assets/out
