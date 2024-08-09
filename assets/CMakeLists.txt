@@ -1,9 +1,10 @@
 ## Assets Target Configuration ##
 
-if(${CMAKE_SYSTEM} MATCHES Linux)
+#if(${CMAKE_SYSTEM} MATCHES Linux)
 	# Asset installation isn't part of the Linux target
-	return()
-endif()
+#	return()
+#endif()
+set(SRB2_CONFIG_ASSET_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/)
 
 if("${SRB2_CONFIG_ASSET_DIRECTORY}" STREQUAL "")
 	message(WARNING "SRB2_CONFIG_ASSET_DIRECTORY is not set, so installation will not contain data files.")

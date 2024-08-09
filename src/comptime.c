@@ -8,12 +8,12 @@
  */
 
 #if (defined(CMAKECONFIG))
-#include "config.h"
+#include "config.h.in"
 const char *compbranch = SRB2_COMP_BRANCH;
 const char *comprevision = SRB2_COMP_REVISION;
 const char *compnote = SRB2_COMP_NOTE;
 const char *comptype = CMAKE_BUILD_TYPE;
-const int compoptimized = SRB2_COMP_OPTIMIZED;
+const int compoptimized = 1; // hackiest hack in the history of hacks
 
 #elif (defined(COMPVERSION))
 #include "comptime.h"
@@ -29,7 +29,8 @@ const int compuncommitted =
 1;
 #else
 0;
-#endif
+#endif 
+
 
 const char *compdate = __DATE__;
 const char *comptime = __TIME__;

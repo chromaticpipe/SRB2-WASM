@@ -1,4 +1,9 @@
 # Declare SDL2 interface sources
+if("${CMAKE_BUILD_TYPE}" EQUAL "Release")
+  add_compile_options("SHELL: -O3")
+endif()
+
+
 
 target_sources(SRB2SDL2 PRIVATE
 	mixer_sound.c
@@ -36,7 +41,7 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES Windows)
 elseif("${CMAKE_SYSTEM_NAME}" MATCHES Linux)
 	set_target_properties(SRB2SDL2 PROPERTIES OUTPUT_NAME lsdlsrb2)
 else()
-	set_target_properties(SRB2SDL2 PROPERTIES OUTPUT_NAME srb2)
+set_target_properties(SRB2SDL2 PROPERTIES OUTPUT_NAME "SRB2SDL2" SUFFIX ".js")
 endif()
 
 if("${CMAKE_SYSTEM_NAME}" MATCHES Darwin)
@@ -62,67 +67,52 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES Windows)
 	target_link_libraries(SRB2SDL2 PRIVATE SDL2::SDL2main)
 endif()
 
-if(NOT "${SRB2_CONFIG_SYSTEM_LIBRARIES}" AND NOT "${SRB2_CONFIG_SHARED_INTERNAL_LIBRARIES}")
-	target_link_libraries(SRB2SDL2 PRIVATE SDL2::SDL2-static SDL2_mixer::SDL2_mixer-static)
-else()
-	target_link_libraries(SRB2SDL2 PRIVATE SDL2::SDL2 SDL2_mixer::SDL2_mixer)
-endif()
 
 if("${CMAKE_SYSTEM_NAME}" MATCHES Linux)
-	target_link_libraries(SRB2SDL2 PRIVATE m rt)
-endif()
+target_link_libraries(SRB2SDL2 PRIVATE m rt)
+endif() 
 
-if("${CMAKE_SYSTEM_NAME}" MATCHES Windows)
-	target_link_libraries(SRB2SDL2 PRIVATE
-		ws2_32
-	)
-	target_compile_options(SRB2SDL2 PRIVATE
-		-U_WINDOWS
-	)
-endif()
+add_link_options("SHELL: -lidbfs.js")
+add_link_options("SHELL: -s EXPORTED_RUNTIME_METHODS=ccall,cwrap")
+add_link_options(
+  "SHELL: -s EXPORTED_FUNCTIONS=_main,_Command_ListWADS_f,_COM_ExecuteString,_P_AddWadFile"
+)
+add_link_options("SHELL: -s ASYNCIFY")
+add_link_options("SHELL: -sUSE_SDL=2")
+add_link_options("SHELL: -sUSE_ZLIB=1")
+add_link_options("SHELL: -sUSE_SDL_MIXER=2")
+add_link_options("SHELL: -s ALLOW_MEMORY_GROWTH=1")
+add_link_options("SHELL: -s INITIAL_MEMORY=655360000")
+add_link_options("SHELL: -s STACK_SIZE=65536000")
+add_link_options("--preload-file=${PROJECT_BINARY_DIR}/assets/out@/")
+add_link_options("SHELL: --use-preload-plugins")
 
 target_compile_definitions(SRB2SDL2 PRIVATE -DHAVE_MIXER -DSOUND=SOUND_MIXER)
-target_compile_definitions(SRB2SDL2 PRIVATE -DDIRECTFULLSCREEN -DHAVE_SDL)
+target_compile_definitions(
+  SRB2SDL2 PRIVATE -DDIRECTFULLSCREEN -DHAVE_SDL -DNEWSIGNALHANDLER=0
+                   -DUNIXBACKTRACE=0 -DHAVE_PNG)
+target_link_options(
+  SRB2SDL2
+  PRIVATE
+  -sUSE_SDL=2
+  -sUSE_SDL_MIXER=2
+  -sUSE_ZLIB
+  -sUSE_LIBPNG
+  -lidbfs.js
+  -sEXPORTED_RUNTIME_METHODS=ccall,cwrap
+  -sEXPORTED_FUNCTIONS=_main,_P_AddWadFile
+  -sASYNCIFY
+  -sALLOW_MEMORY_GROWTH=1
+  -sINITIAL_MEMORY=983040000
+  -sSTACK_SIZE=655360000
+  --preload-file=${CMAKE_BINARY_DIR}/assets/out@/
+  --use-preload-plugins)
+target_compile_options(SRB2SDL2 PRIVATE -sUSE_SDL=2 -sUSE_SDL_MIXER=2
+                                        -sUSE_ZLIB -sUSE_LIBPNG)
 
-#### Installation ####
-if("${CMAKE_SYSTEM_NAME}" MATCHES Darwin)
-	install(TARGETS SRB2SDL2
-		BUNDLE DESTINATION .
-	)
-	set_property(TARGET SRB2SDL2 PROPERTY INSTALL_RPATH_USE_LINK_PATH ON)
-else()
-	install(TARGETS SRB2SDL2 SRB2SDL2
-		RUNTIME DESTINATION .
-	)
-	if ((${CMAKE_BUILD_TYPE} MATCHES Debug) OR (${CMAKE_BUILD_TYPE} MATCHES RelWithDebInfo))
-		set(SRB2_DEBUG_INSTALL OFF CACHE BOOL "Insert *.debug file into the install directory or package.")
-		if (${SRB2_DEBUG_INSTALL})
-			install(FILES $<TARGET_FILE:SRB2SDL2>.debug
-				DESTINATION .
-				OPTIONAL
-			)
-		endif()
-	endif()
-endif()
+# Installation ####
+install(TARGETS SRB2SDL2 SRB2SDL2 RUNTIME DESTINATION .)
 
-# Mac bundle fixup
-# HACK: THIS IS IMPORTANT! See the escaped \${CMAKE_INSTALL_PREFIX}? This
-# makes it so that var is evaluated LATER during cpack, not right now!
-# This fixes the quirk where the bundled libraries don't land in the final package
-# https://cmake.org/pipermail/cmake/2011-March/043532.html
-#
-# HOWEVER: ${CPACK_PACKAGE_DESCRIPTION_SUMMARY} is NOT escaped, because that var
-# is only available to us at this step. Read the link: ${CMAKE_INSTALL_PREFIX} at
-# this current step points to the CMAKE build folder, NOT the folder that CPACK uses.
-# Therefore, it makes sense to escape that var, but not the other.
-if("${CMAKE_SYSTEM_NAME}" MATCHES Darwin)
-	install(CODE "
-		include(BundleUtilities)
-		fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/${CPACK_PACKAGE_DESCRIPTION_SUMMARY}.app\"
-			\"\"
-			/Library/Frameworks
-		)"
-	)
-endif()
-
-set(SRB2_SDL2_AVAILABLE YES PARENT_SCOPE)
+set(SRB2_SDL2_AVAILABLE
+    YES
+    PARENT_SCOPE)

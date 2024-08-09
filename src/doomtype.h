@@ -122,7 +122,7 @@ int endswith (const char *base, const char *tag);
 	#endif
 #endif
 
-#ifndef HAVE_DOSSTR_FUNCS
+#ifdef HAVE_DOSSTR_FUNCS
 int strupr(char *n); // from dosstr.c
 int strlwr(char *n); // from dosstr.c
 #endif

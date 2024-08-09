@@ -30,7 +30,7 @@
 #endif
 
 #include <time.h>
-
+#include "emscripten.h"
 #include "doomdef.h"
 #include "am_map.h"
 #include "console.h"
@@ -73,11 +73,8 @@
 #include "m_random.h"
 #include "command.h"
 
-#ifdef CMAKECONFIG
-#include "config.h"
-#else
+
 #include "config.h.in"
-#endif
 
 #ifdef HWRENDER
 #include "hardware/hw_main.h" // 3D View Rendering
@@ -697,72 +694,14 @@ static void D_Display(void)
 	}
 }
 
-// =========================================================================
-// D_SRB2Loop
-// =========================================================================
 
-tic_t rendergametic;
 
-void D_SRB2Loop(void)
-{
-	tic_t entertic = 0, oldentertics = 0, realtics = 0, rendertimeout = INFTICS;
-	double deltatics = 0.0;
-	double deltasecs = 0.0;
-	static lumpnum_t gstartuplumpnum;
-
-	boolean interp = false;
-	boolean doDisplay = false;
-
-	if (dedicated)
-		server = true;
-
-	// Pushing of + parameters is now done back in D_SRB2Main, not here.
-
-#ifdef _WINDOWS
-	CONS_Printf("I_StartupMouse()...\n");
-	I_DoStartupMouse();
-#endif
-
-	I_UpdateTime(cv_timescale.value);
-	oldentertics = I_GetTime();
-
-	// end of loading screen: CONS_Printf() will no more call FinishUpdate()
-	con_refresh = false;
-	con_startup = false;
-
-	// make sure to do a d_display to init mode _before_ load a level
-	SCR_SetMode(); // change video mode
-	SCR_Recalc();
-
-	chosenrendermode = render_none;
-
-	// Check and print which version is executed.
-	// Use this as the border between setup and the main game loop being entered.
-	CONS_Printf(
-	"===========================================================================\n"
-	"                   We hope you enjoy this game as\n"
-	"                     much as we did making it!\n"
-	"                            ...wait. =P\n"
-	"===========================================================================\n");
-
-	// hack to start on a nice clear console screen.
-	COM_ImmedExecute("cls;version");
-
-	I_FinishUpdate(); // page flip or blit buffer
-	/*
-	LMFAO this was showing garbage under OpenGL
-	because I_FinishUpdate was called afterward
-	*/
-	/* Smells like a hack... Don't fade Sonic's ass into the title screen. */
-	if (gamestate != GS_TITLESCREEN)
-	{
-		gstartuplumpnum = W_CheckNumForName("STARTUP");
-		if (gstartuplumpnum == LUMPERROR)
-			gstartuplumpnum = W_GetNumForName("MISSING");
-		V_DrawScaledPatch(0, 0, 0, W_CachePatchNum(gstartuplumpnum, PU_PATCH));
-	}
-
-	for (;;)
+double deltatics = 0.0;
+double deltasecs = 0.0;
+tic_t entertic = 0, oldentertics = 0, realtics = 0, rendertimeout = INFTICS;
+boolean interp = false;
+boolean doDisplay = false;
+	void D_SRB2DrawFrame(void) {
 	{
 		// capbudget is the minimum precise_t duration of a single loop iteration
 		precise_t capbudget;
@@ -918,6 +857,67 @@ void D_SRB2Loop(void)
 		deltasecs = (double)((INT64)(finishprecise - enterprecise)) / I_GetPrecisePrecision();
 		deltatics = deltasecs * NEWTICRATE;
 	}
+}  
+
+// =========================================================================
+// D_SRB2Loop
+// =========================================================================
+
+tic_t rendergametic;
+
+void D_SRB2Loop(void)
+{
+	static lumpnum_t gstartuplumpnum;
+
+	if (dedicated)
+		server = true;
+
+	// Pushing of + parameters is now done back in D_SRB2Main, not here.
+
+#ifdef _WINDOWS
+	CONS_Printf("I_StartupMouse()...\n");
+	I_DoStartupMouse();
+#endif
+
+	I_UpdateTime(cv_timescale.value);
+	oldentertics = I_GetTime();
+
+	// end of loading screen: CONS_Printf() will no more call FinishUpdate()
+	con_refresh = false;
+	con_startup = false;
+
+	// make sure to do a d_display to init mode _before_ load a level
+	SCR_SetMode(); // change video mode
+	SCR_Recalc();
+
+	chosenrendermode = render_none;
+
+	// Check and print which version is executed.
+	// Use this as the border between setup and the main game loop being entered.
+	CONS_Printf(
+	"===========================================================================\n"
+	"                   We hope you enjoy this game as\n"
+	"                     much as we did making it!\n"
+	"                            ...wait. =P\n"
+	"===========================================================================\n");
+
+	// hack to start on a nice clear console screen.
+	COM_ImmedExecute("cls;version");
+
+	I_FinishUpdate(); // page flip or blit buffer
+	/*
+	LMFAO this was showing garbage under OpenGL
+	because I_FinishUpdate was called afterward
+	*/
+	/* Smells like a hack... Don't fade Sonic's ass into the title screen. */
+	if (gamestate != GS_TITLESCREEN)
+	{
+		gstartuplumpnum = W_CheckNumForName("STARTUP");
+		if (gstartuplumpnum == LUMPERROR)
+			gstartuplumpnum = W_GetNumForName("MISSING");
+		V_DrawScaledPatch(0, 0, 0, W_CachePatchNum(gstartuplumpnum, PU_PATCH)); 
+	}
+		emscripten_set_main_loop(D_SRB2DrawFrame, 0, 1);
 }
 
 //
