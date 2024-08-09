@@ -56,6 +56,7 @@ jobs:
           cd build 
 
           
+          mkdir assets 
           mkdir assets/out
           pushd assets/out
        
