@@ -50,7 +50,7 @@ jobs:
       - name: Build
         run: |
           builddir=$(pwd)
-          wget https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.13/SRB2-v2213-Full.zip
+         
 
           mkdir build
           cd build 
@@ -58,8 +58,11 @@ jobs:
           
           mkdir assets/out
           pushd assets/out
-          unzip $builddir/SRB2-v2213-Full.zip
-          popd
+       
+          wget https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.13/SRB2-v2213-Full.zip 
+          unzip SRB2-v2213-Full.zip
+          popd 
+          cd ../
 
 
           echo "Setting CC to $(which emcc)"
