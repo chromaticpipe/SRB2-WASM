@@ -52,13 +52,15 @@ jobs:
           builddir=$(pwd)
           wget https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.13/SRB2-v2213-Full.zip
 
+          mkdir build
+          cd build 
+
+          
           mkdir assets/out
           pushd assets/out
           unzip $builddir/SRB2-v2213-Full.zip
           popd
 
-          mkdir build
-          cd build
 
           echo "Setting CC to $(which emcc)"
           echo "Setting CXX to $(which emcc)"
