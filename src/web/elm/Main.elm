@@ -187,7 +187,7 @@ viewControls status =
         Status.NotStarted ->
             div [ class "flex flex-col items-center" ]
                 [ Views.Button.init { text = "Start", onClick = StartGame } |> Views.Button.toHtml
-                , p [] [ span [] [ text "WARNING: This will download approximately 500MB of data" ] ]
+                , p [] [ span [] [ text "WARNING: This will download approximately 200MB of data" ] ]
                 ]
 
         Status.Starting ->

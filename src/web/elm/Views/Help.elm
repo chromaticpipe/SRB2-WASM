@@ -10,7 +10,7 @@ import Views.Modal
 view : Bool -> Html Msg
 view isOpen =
     Views.Modal.init
-        { header = "Welcome to SRB2Kart WASM!"
+        { header = "Welcome to SRB2 WASM!"
         , content =
             [ section []
                 [ h2 [ class "text-lg mb-2" ] [ text "Controls" ]

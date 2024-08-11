@@ -21,7 +21,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "SRB2Kart v1.6",
+      title: "SRB2 v2.2.13",
       xhtml: true,
       template: "index.html",
       cache: false,
