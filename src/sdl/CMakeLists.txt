@@ -1,7 +1,9 @@
 # Declare SDL2 interface sources
 if("${CMAKE_BUILD_TYPE}" EQUAL "Release")
   add_compile_options("SHELL: -O3")
-endif()
+endif() 
+
+set_target_properties(SRB2SDL2 PROPERTIES OUTPUT_NAME "SRB2SDL2" SUFFIX ".js")
 
 
 
