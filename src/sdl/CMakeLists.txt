@@ -78,7 +78,7 @@ add_link_options("SHELL: -sUSE_SDL_MIXER=2")
 add_link_options("SHELL: -s ALLOW_MEMORY_GROWTH=1")
 add_link_options("SHELL: -s INITIAL_MEMORY=655360000")
 add_link_options("SHELL: -s STACK_SIZE=65536000")
-add_link_options("--preload-file=${PROJECT_BINARY_DIR}/assets/out@/")
+add_link_options("--preload-file=${PROJECT_SOURCE_DIR}/assets/out@/")
 add_link_options("SHELL: --use-preload-plugins")
 
 target_compile_definitions(SRB2SDL2 PRIVATE -DHAVE_MIXER -DSOUND=SOUND_MIXER)
@@ -99,7 +99,7 @@ target_link_options(
   -sALLOW_MEMORY_GROWTH=1
   -sINITIAL_MEMORY=983040000
   -sSTACK_SIZE=655360000
-  --preload-file=${PROJECT_BINARY_DIR}/assets/out@/
+  --preload-file=${PROJECT_SOURCE_DIR}/assets/out@/
   --use-preload-plugins)
 target_compile_options(SRB2SDL2 PRIVATE -sUSE_SDL=2 -sUSE_SDL_MIXER=2
                                         -sUSE_ZLIB -sUSE_LIBPNG)
