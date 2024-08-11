@@ -36,13 +36,7 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES Darwin)
 	)
 endif()
 
-if("${CMAKE_SYSTEM_NAME}" MATCHES Windows)
-	set_target_properties(SRB2SDL2 PROPERTIES OUTPUT_NAME srb2win)
-elseif("${CMAKE_SYSTEM_NAME}" MATCHES Linux)
-	set_target_properties(SRB2SDL2 PROPERTIES OUTPUT_NAME lsdlsrb2)
-else()
-set_target_properties(SRB2SDL2 PROPERTIES OUTPUT_NAME "SRB2SDL2" SUFFIX ".js")
-endif()
+
 
 if("${CMAKE_SYSTEM_NAME}" MATCHES Darwin)
 	find_library(CORE_FOUNDATION_LIBRARY "CoreFoundation")
@@ -105,7 +99,7 @@ target_link_options(
   -sALLOW_MEMORY_GROWTH=1
   -sINITIAL_MEMORY=983040000
   -sSTACK_SIZE=655360000
-  --preload-file=${CMAKE_BINARY_DIR}/assets/out@/
+  --preload-file=${PROJECT_BINARY_DIR}/assets/out@/
   --use-preload-plugins)
 target_compile_options(SRB2SDL2 PRIVATE -sUSE_SDL=2 -sUSE_SDL_MIXER=2
                                         -sUSE_ZLIB -sUSE_LIBPNG)
