@@ -202,7 +202,7 @@ int main(int argc, char **argv)
 	myargc = argc;
 	myargv = argv; /// \todo pull out path to exe from this string
 
-    Em_SyncFS() 
+    Em_SyncFS();
 	
 #ifdef HAVE_TTF
 #ifdef _WIN32
