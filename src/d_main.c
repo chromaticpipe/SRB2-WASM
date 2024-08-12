@@ -1905,7 +1905,7 @@ static void Em_SyncFS(void)
    // Make a directory other than '/'
 			// FS.mkdir('/user');
 			// Then mount with IDBFS type  
-					FS.mount(IDBFS, {}, '/home/web_user'); 
+			FS.mount(IDBFS, {}, '/home/web_user'); 
 			FS.mount(IDBFS, {}, '/home/web_user/.srb2'); 
 
             // Then sync
@@ -1920,4 +1920,15 @@ static void Em_SyncFS(void)
 InitializeFS();
 	);
 
+} 
+
+
+int main(int argc, char **argv)
+{
+    myargc = argc;
+	myargv = argv;
+
+    Em_SyncFS();
+
+	return 0;
 }
