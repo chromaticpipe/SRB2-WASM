@@ -165,6 +165,7 @@ static void Em_SyncFS(void)
             
             
             FS.mount(IDBFS, {}, '/home/web_user'); 
+			FS.mkdir(IDBFS, {}, '/home/web_user/.srb2'); 
 			FS.mount(IDBFS, {}, '/home/web_user/.srb2');
             
 
