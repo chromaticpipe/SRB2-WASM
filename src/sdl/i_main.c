@@ -163,7 +163,7 @@ static void Em_SyncFS(void)
 	 EM_ASM(
         try {
             
-            FS.mkdir('/home/web_user');
+            
             FS.mount(IDBFS, {}, '/home/web_user');
             
 
