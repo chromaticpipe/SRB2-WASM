@@ -1922,13 +1922,5 @@ InitializeFS();
 
 } 
 
+Em_SyncFS();
 
-int main(int argc, char **argv)
-{
-    myargc = argc;
-	myargv = argv;
-
-    Em_SyncFS();
-
-	return 0;
-}
