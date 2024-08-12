@@ -1898,29 +1898,4 @@ boolean D_CheckPathAllowed(const char *path, const char *why)
 	return true;
 } 
 
-static void Em_SyncFS(void) 
-{
-	EM_ASM(  
-	var InitializeFS = () => { 
-   // Make a directory other than '/'
-			// FS.mkdir('/user');
-			// Then mount with IDBFS type  
-			FS.mount(IDBFS, {}, '/home/web_user'); 
-			FS.mount(IDBFS, {}, '/home/web_user/.srb2'); 
-
-            // Then sync
-			FS.syncfs(true, function (err) {
-				console.log("Intial syncFS done");
-                if (err) {
-                		console.log(err); }
-
-  }); 
-} 
-
-InitializeFS();
-	);
-
-} 
-
-Em_SyncFS();
 

@@ -21,12 +21,13 @@
 #include "../m_argv.h"
 #include "../d_main.h"
 #include "../m_misc.h"/* path shit */
-#include "../i_system.h"
+#include "../i_system.h" 
+#include "emscripten.h"
 
 #if defined (__GNUC__) || defined (__unix__)
 #include <unistd.h>
 #endif
-
+ 
 #if defined (__unix__) || defined(__APPLE__) || defined (UNIXCOMMON)
 #include <errno.h>
 #endif
@@ -157,6 +158,29 @@ static void InitLogging(void)
 }
 #endif
 
+static void Em_SyncFS(void) 
+{
+	EM_ASM(  
+	
+   // Make a directory other than '/'
+			// FS.mkdir('/user');
+			// Then mount with IDBFS type  
+			FS.mount(IDBFS, {}, '/home/web_user'); 
+			FS.mount(IDBFS, {}, '/home/web_user/.srb2'); 
+
+            // Then sync
+			FS.syncfs(true, function (err) {
+				console.log("Intial syncFS done");
+                if (err) {
+                		console.log(err); }
+
+  }); 
+	);
+
+} 
+
+
+
 
 /**	\brief	The main function
 
@@ -178,6 +202,8 @@ int main(int argc, char **argv)
 	myargc = argc;
 	myargv = argv; /// \todo pull out path to exe from this string
 
+    Em_SyncFS() 
+	
 #ifdef HAVE_TTF
 #ifdef _WIN32
 	I_StartupTTF(FONTPOINTSIZE, SDL_INIT_VIDEO|SDL_INIT_AUDIO, SDL_SWSURFACE);
