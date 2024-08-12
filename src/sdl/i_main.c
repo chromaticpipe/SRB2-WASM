@@ -164,7 +164,8 @@ static void Em_SyncFS(void)
         try {
             
             
-            FS.mount(IDBFS, {}, '/home/web_user');
+            FS.mount(IDBFS, {}, '/home/web_user'); 
+			FS.mount(IDBFS, {}, '/home/web_user/.srb2');
             
 
             FS.syncfs(true, function(err) {
