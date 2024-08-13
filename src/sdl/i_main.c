@@ -170,14 +170,14 @@ static void Em_SyncFS(void)
 			FS.syncfs(true, function (err) {
 				console.log("Intial syncFS done");
 				console.log(err);
-				Module.ccall("main", 'number', [], []);
+				
         	});
 		} 
 		catch (err)
 		{
 			
 			console.log(err);
-			Module.ccall("main", 'number', [], []);
+			
 		}
     );
 
@@ -205,7 +205,8 @@ int main(int argc, char **argv)
 {
 	myargc = argc;
 	myargv = argv; /// \todo pull out path to exe from this string
-
+	
+Em_SyncFS()
    
 	
 #ifdef HAVE_TTF
