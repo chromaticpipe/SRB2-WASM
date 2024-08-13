@@ -161,24 +161,24 @@ static void InitLogging(void)
 static void Em_SyncFS(void) 
 {
 	 EM_ASM(
-        try {
-            
-            
-            FS.mount(IDBFS, {}, '/home/web_user'); 
-			FS.mkdir('/home/web_user/.srb2'); 
-			FS.mount(IDBFS, {}, '/home/web_user/.srb2');
-            
+         try
+		{
+			
+			FS.mount(IDBFS, {}, '/home/web_user');
 
-            FS.syncfs(true, function(err) {
-                if (err) {
-                    console.error("Error during syncFS:", err);
-                } else {
-                    console.log("Initial syncFS done");
-                }
-            });
-        } catch (e) {
-            console.error("Error happened while synching filesystem", e);
-        }
+			
+			FS.syncfs(true, function (err) {
+				console.log("Intial syncFS done");
+				console.log(err);
+				Module.ccall("main", 'number', [], []);
+        	});
+		} 
+		catch (err)
+		{
+			
+			console.log(err);
+			Module.ccall("main", 'number', [], []);
+		}
     );
 
 } 
