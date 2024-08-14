@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <meta charset="utf-8" />
+ 
 </html>
-<head>
+<head> 
+  <meta charset="utf-8" />
   <link rel="preload" href="SRB2SDL2.js" as="script" />
   <link rel="preload" href="SRB2SDL2.wasm" as="fetch" />
 </head>
 <body>
-  <main id="main"></main>
+  <main id="main"></main> 
+  <script>    
+
+var Module = Module || {};
+
+ Module.onRuntimeInitialized = function() {
+      var InitializeFS = () => {
+        FS.mkdirTree('/addons');
+        FS.symlink('/home/web_user/.srb2', '/addons/.srb2');
+        FS.mount(IDBFS, {}, '/home/web_user');
+        return (new Promise((resolve, reject) => {
+          FS.syncfs(true, (err) => {
+            console.log("SyncFS done");
+            console.log(err);
+            resolve();
+          });
+        }));
+      }; 
+      InitializeFS();
+    }
+  </script>
 </body>
