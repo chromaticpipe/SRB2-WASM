@@ -39,7 +39,8 @@
 #include "m_cond.h" //unlock triggers
 #include "lua_hook.h" // LUA_HookLinedefExecute
 #include "f_finale.h" // control text prompt
-#include "r_skins.h" // skins
+#include "r_skins.h" // skins 
+#include "p_enemy.h"
 
 #ifdef HW3SOUND
 #include "hardware/hw3sound.h"

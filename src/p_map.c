@@ -34,7 +34,8 @@
 
 #include "lua_hook.h"
 
-#include "m_perfstats.h" // ps_checkposition_calls
+#include "m_perfstats.h" // ps_checkposition_calls 
+#include "p_enemy.h"
 
 fixed_t tmbbox[4];
 mobj_t *tmthing;
