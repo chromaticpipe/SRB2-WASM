@@ -44,7 +44,8 @@
 // Objectplace
 #include "m_cheat.h"
 // Thok camera snap (ctrl-f "chalupa")
-#include "g_input.h"
+#include "g_input.h" 
+#include "p_enemy.h"
 
 #ifdef HW3SOUND
 #include "hardware/hw3sound.h"
