@@ -1,5 +1,3 @@
-import { InitializeFS } from "./fs"; 
-import { SyncFS } from "./fs";
 export class Kart {
   constructor(app) {
     this.canvas = document.getElementById("canvas");
