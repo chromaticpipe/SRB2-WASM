@@ -6,12 +6,12 @@ export class Kart {
     this.app = app;
 
     this.Module = {
-      preRun: [() => {  
-        addRunDependency('mount-filesystem'); 
+      preRun: [ 
+        addRunDependency('mount-filesystem'), 
         InitializeFS()
       .then(_ => SyncFS())
-      .finally(() => removeRunDependency('mount-filesystem'));
-      }],
+      .finally(() => removeRunDependency('mount-filesystem')),
+      ],
       postRun: [],
       print: (function () {
         return function (t) {
