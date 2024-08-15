@@ -6,12 +6,7 @@ export class Kart {
     this.app = app;
 
     this.Module = {
-      preRun: [
-        function() {  
-          InitializeFS();
-          SyncFS();
-        }
-      ],
+      preRun: [],
       postRun: [],
       print: (function () {
         return function (t) {
