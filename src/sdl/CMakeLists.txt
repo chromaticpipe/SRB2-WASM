@@ -98,7 +98,7 @@ target_link_options(
   -sEXPORTED_RUNTIME_METHODS=ccall,cwrap
   -sEXPORTED_FUNCTIONS=_main,_P_AddWadFile,_Command_ListWADS_f
   -sASYNCIFY 
-  --pre-js ${PROJECT_SOURCE_DIR}/src/web/js/module.js/
+  --pre-js ${PROJECT_SOURCE_DIR}/src/web/js/module.js
   -sALLOW_MEMORY_GROWTH=1
   -sINITIAL_MEMORY=983040000
   -sSTACK_SIZE=655360000
