@@ -6,11 +6,11 @@ export class Kart {
     this.app = app;
 
     this.Module = {
-      preRun: [ 
-        addRunDependency('mount-filesystem'), 
-        InitializeFS()
-      .then(_ => SyncFS())
-      .finally(() => removeRunDependency('mount-filesystem')),
+      preRun: [
+        function() {  
+          InitializeFS()
+          .then(_ => SyncFS());
+        }
       ],
       postRun: [],
       print: (function () {
@@ -47,7 +47,9 @@ export class Kart {
     };
 
     window.Module = this.Module;
-  }
+  } 
+  
+   
 
   static parseEmsText(text) {
     if (arguments.length > 1) {
