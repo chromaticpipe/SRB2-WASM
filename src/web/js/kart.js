@@ -1,10 +1,17 @@
+import { InitializeFS } from "./fs"; 
+import { SyncFS } from "./fs";
 export class Kart {
   constructor(app) {
     this.canvas = document.getElementById("canvas");
     this.app = app;
 
     this.Module = {
-      preRun: [],
+      preRun: [() => {  
+        addRunDependency('mount-filesystem'); 
+        InitializeFS()
+      .then(_ => SyncFS())
+      .finally(() => removeRunDependency('mount-filesystem'));
+      }],
       postRun: [],
       print: (function () {
         return function (t) {

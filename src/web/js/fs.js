@@ -24,15 +24,4 @@ var SyncFS = (populate = false) => {
     }));
   };
   
-  var Module = { 
-    arguments: [],  
-
-    preRun: [() => {   
-        addRunDependency('mount-filesystem'); 
-        InitializeFS() 
-        .then(()=>{    
-            console.log('starting..') //idk what im doing here
-        }) 
-        .then(_ => SyncFS())
-        .finally(() => removeRunDependency('mount-filesystem'));
-  }]}
+  
