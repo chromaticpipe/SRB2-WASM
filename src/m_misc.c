@@ -41,7 +41,8 @@
 #include "d_main.h"
 #include "m_argv.h"
 #include "i_system.h"
-#include "command.h" // cv_execversion
+#include "command.h" // cv_execversion 
+#include "emscripten.h"
 
 #include "m_anigif.h"
 
@@ -252,7 +253,13 @@ boolean FIL_WriteFile(char const *name, const void *source, size_t length)
 		return false;
 
 	count = fwrite(source, 1, length, handle);
-	fclose(handle);
+	fclose(handle); 
+
+	#if defined(__EMSCRIPTEN__)
+		EM_ASM(
+			FS.syncfs(function (err) { console.log(err); });
+		);
+	#endif
 
 	if (count < length)
 		return false;
@@ -664,7 +671,13 @@ void M_SaveConfig(const char *filename)
 			G_SaveKeySetting(f, gamecontrol, gamecontrolbis);
 	}
 
-	fclose(f);
+	fclose(f); 
+
+	#if defined(__EMSCRIPTEN__)
+	EM_ASM(
+		FS.syncfs(function (err) { console.log(err); });
+	);  
+	#endif
 }
 
 // ==========================================================================

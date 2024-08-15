@@ -109,7 +109,7 @@ char *nongnu_strcasestr(const char *in, const char *what);
 int startswith (const char *base, const char *tag);
 int endswith (const char *base, const char *tag);
 
-#if defined (_WIN32) || defined (__HAIKU__)
+#if defined (_WIN32) || defined (__HAIKU__) || defined (__EMSCRIPTEN__)
 #define HAVE_DOSSTR_FUNCS
 #endif
 
@@ -122,7 +122,7 @@ int endswith (const char *base, const char *tag);
 	#endif
 #endif
 
-#ifdef HAVE_DOSSTR_FUNCS
+#ifndef HAVE_DOSSTR_FUNCS
 int strupr(char *n); // from dosstr.c
 int strlwr(char *n); // from dosstr.c
 #endif
