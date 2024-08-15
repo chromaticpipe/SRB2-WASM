@@ -47,15 +47,11 @@ export class Kart {
     };
 
     window.Module = this.Module;
-<<<<<<< HEAD
-  } 
-=======
   } 
   
    
->>>>>>> b06f3408261709c5a9889b34d2f7e4d08d8421cb
 
- t
+ 
 
   static parseEmsText(text) {
     if (arguments.length > 1) {
