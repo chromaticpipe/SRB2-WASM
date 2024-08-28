@@ -47,10 +47,11 @@ jobs:
       - name: Get CMake
         uses: symbitic/install-cmake@master
 
-      - name: Build
+      - name: Build 
+      #Now only unzips required files, for faster loading
         run: |
-          builddir=$(pwd)
-          wget https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.13/SRB2-v2213-Full.zip
+          builddir=$(pwd)  
+          wget https://github.com/STJr/SRB2/releases/download/SRB2_release_2.2.13/SRB2-v2213-Full.zip  '*.pk3' '*.dta'
 
           mkdir assets/out
           pushd assets/out
