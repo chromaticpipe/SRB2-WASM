@@ -160,8 +160,8 @@ static void InitLogging(void)
 
 static void Em_SyncFS(void) 
 {
-	 EM_ASM(
-         try
+	  EM_ASM(
+        try
 		{
 			
 			FS.mount(IDBFS, {}, '/home/web_user');
@@ -170,14 +170,14 @@ static void Em_SyncFS(void)
 			FS.syncfs(true, function (err) {
 				console.log("Intial syncFS done");
 				console.log(err);
-				
+				Module.ccall("main_program", 'number', [], [], {async: true});
         	});
 		} 
 		catch (err)
 		{
 			
 			console.log(err);
-			\
+			Module.ccall("main_program", 'number', [], [], {async: true});
 		}
     );
 
@@ -196,7 +196,10 @@ static void Em_SyncFS(void)
 #if defined (__GNUC__) && (__GNUC__ >= 4)
 #pragma GCC diagnostic ignored "-Wmissing-noreturn"
 #endif
-
+#if defined(__EMSCRIPTEN__)
+int main_program(void)
+{ 
+#else
 #ifdef FORCESDLMAIN
 int SDL_main(int argc, char **argv)
 #else
@@ -205,8 +208,8 @@ int main(int argc, char **argv)
 {
 	myargc = argc;
 	myargv = argv; /// \todo pull out path to exe from this string
-Em_SyncFS();
 
+#endif
    
 	
 #ifdef HAVE_TTF
@@ -261,5 +264,17 @@ Em_SyncFS();
 
 	// return to OS
 	return 0;
+} 
+
+#if defined (__EMSCRIPTEN__) 
+int main(int argc, char **argv)
+{
+    myargc = argc;
+	myargv = argv;
+
+    Em_SyncFS();
+
+	return 0;
 }
+#endif
 #endif
