@@ -9,14 +9,30 @@ Then go into the emsdk directory
 ```
 cd emsdk
 ```
-Install emscripten, make sure to install 3.1.52 as newer versions are incompatible currently
+Install emscripten, make sure to install 3.1.52 as newer versions are incompatible currently.
 ```
 ./emsdk install 3.1.52 
 ./emsdk activate 3.1.52
 ``` 
-Finally, set environment variables 
+Finally, set environment variables.
 ```
-source emsdk_env.sh 
+source emsdk_env.sh  
+``` 
+Now that you have set up emscripten you can now build SRB2
+In the repository do.
+```
+emcmake cmake -B build 
+``` 
+Build files will be generated in build/.
+
+```
+cd build
+make -j[desired amount of cores] 
+``` 
+Output files will end up in bin/ and you can run the game locally using emrun.
+```
+cd bin 
+emrun index.html
 ```
 # Sonic Robo Blast 2
 [![latest release](https://badgen.net/github/release/STJr/SRB2/stable)](https://github.com/STJr/SRB2/releases/latest)
