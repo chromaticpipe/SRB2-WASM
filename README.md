@@ -1,3 +1,23 @@
+# SRB2-WASM
+## How To Build 
+This project uses the emscripten toolchain and cmake, you can install cmake from [here](https://cmake.org/download/) or from your package manager. 
+To install emscripten, you will need to use the [emsdk](https://github.com/emscripten-core/emsdk). First clone the emsdk repo
+```
+git clone https://github.com/emscripten-core/emsdk 
+```
+Then go into the emsdk directory 
+```
+cd emsdk
+```
+Install emscripten, make sure to install 3.1.52 as newer versions are incompatible currently
+```
+./emsdk install 3.1.52 
+./emsdk activate 3.1.52
+``` 
+Finally, set environment variables 
+```
+source emsdk_env.sh 
+```
 # Sonic Robo Blast 2
 [![latest release](https://badgen.net/github/release/STJr/SRB2/stable)](https://github.com/STJr/SRB2/releases/latest)
 
