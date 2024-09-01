@@ -18,8 +18,13 @@ Finally, set environment variables.
 ```
 source emsdk_env.sh  
 ``` 
-Now that you have set up emscripten you can now build SRB2
-In the repository do.
+Clone this repository recursively to update submodules
+```  
+git clone https://github.com/chromaticpipe/SRB2-WASM.git --recursive
+
+cd SRB2-WASM
+
+```
 ```
 emcmake cmake -B build 
 ``` 
