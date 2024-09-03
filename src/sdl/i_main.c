@@ -165,7 +165,7 @@ static void Em_SyncFS(void)
 		{
 			
 			FS.mount(IDBFS, {}, '/home/web_user');
-            FS.mount(IDBFS, {}, '/home/web_user/home/web_user');
+            
 			
 			FS.syncfs(true, function (err) {
 				console.log("Intial syncFS done");
