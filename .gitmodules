@@ -1,3 +1,0 @@
-[submodule "src/web/filemanager"]
-	path = src/web/filemanager
-	url = https://github.com/chromaticpipe/IndexedDB-File-Manager
