@@ -9,7 +9,6 @@ file(COPY elm.json DESTINATION .)
 file(COPY webpack.config.js DESTINATION .)
 file(COPY postcss.config.js DESTINATION .)
 file(COPY tailwind.config.js DESTINATION .)  
-file(COPY filemanager DESTINATION ${CMAKE_BINARY_DIR}/bin)
 file(COPY ${CMAKE_SOURCE_DIR}/srb2.png
      DESTINATION ${CMAKE_BINARY_DIR}/bin)
 set(NODE_ENV "$<$<STREQUAL:${CMAKE_BUILD_TYPE},Release>:production>")
