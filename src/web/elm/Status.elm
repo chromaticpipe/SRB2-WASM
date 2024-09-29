@@ -70,7 +70,7 @@ toString status =
             "Running..."
 
         Error ->
-            "Error"
+            ""
 
         NotStarted ->
             "Not Started"

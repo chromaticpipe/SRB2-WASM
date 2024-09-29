@@ -102,7 +102,9 @@ target_link_options(
   -sINITIAL_MEMORY=983040000
   -sSTACK_SIZE=655360000
   --preload-file=${PROJECT_SOURCE_DIR}/assets/out@/
-  --use-preload-plugins)
+  --use-preload-plugins 
+  --use-preload-cache
+  )
 target_compile_options(SRB2SDL2 PRIVATE -sUSE_SDL=2 -sUSE_SDL_MIXER=2
                                         -sUSE_ZLIB -sUSE_LIBPNG)
 
