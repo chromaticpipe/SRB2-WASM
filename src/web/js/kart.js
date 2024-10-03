@@ -73,8 +73,8 @@ export class Kart {
       FS.write(fileStream, chunk, 0, chunk.length);
     }
 
-    FS.close(fileStream);
     this.P_AddWadFile(filename);
+    FS.close(fileStream)
   };
 
   requestFullscreen = () => {
