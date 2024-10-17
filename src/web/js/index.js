@@ -12,7 +12,8 @@ app.ports.addFile.subscribe((message) => {
   // We handle this in JavaScript because serializing 60MBs of
   // binary data in base64 is pretty bad!
   const input = document.createElement("input");
-  input.type = "file";
+  input.type = "file"; 
+  input.accept = ".wad, .pk3, .soc, .lua"
   input.addEventListener("change", (event) => {
     const file = event.target.files[0];
     kart.addFile(file);
